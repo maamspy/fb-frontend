@@ -1,17 +1,17 @@
 // app/not-found.js
 
-import Image from "next/image";
-import Link from "next/link";
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function NotFound() {
   return (
-    <main className="flex-1 flex flex-col items-center justify-center text-center px-4">
+    <main className="flex-1 flex py-16 flex-col items-center justify-center text-center px-4">
       <Image
         src="/404.png"
         height={105}
         width={240}
         alt="404 Not Found Image PNG"
-        className="my-12"
+        className="mb-8"
       />
       <p className="text-xl mb-6">
         Sorry, the page you are looking for was not found.

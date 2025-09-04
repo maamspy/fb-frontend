@@ -1,73 +1,126 @@
+// app/_components/shared/Navbar.js
+
 'use client';
 
 import { RippleButton } from '@/components/magicui/ripple-button';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, LogOut } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import { useSession, signOut } from 'next-auth/react';
 
 const Navbar = () => {
+  const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const pathname = usePathname();
 
-  // Close with animation
   const handleClose = () => {
     setIsClosing(true);
     setTimeout(() => {
       setIsOpen(false);
       setIsClosing(false);
-    }, 300); // must match your Tailwind transition duration
+    }, 300);
   };
 
-  // Close mobile menu whenever the route changes
   useEffect(() => {
     if (isOpen) handleClose();
   }, [pathname]);
 
-  const menuButtons = useMemo(
-    () => (
-      <>
-        <Link
-          href="/"
-          onClick={handleClose}
-          className="block md:inline text-gray-700 hover:text-blue-600"
-        >
-          Home
-        </Link>
-        <Link
-          href="/templates"
-          onClick={handleClose}
-          className="block md:inline text-gray-700 hover:text-blue-600"
-        >
-          Templates
-        </Link>
-        <Link
-          href="/pricing"
-          onClick={handleClose}
-          className="block md:inline text-gray-700 hover:text-blue-600"
-        >
-          Pricing
-        </Link>
-        <Link
-          href="/contact"
-          onClick={handleClose}
-          className="block md:inline text-gray-700 hover:text-blue-600"
-        >
-          Contact
-        </Link>
-      </>
-    ),
-    []
+  const menuButtons = session ? (
+    <>
+      <Link
+        href="/dashboard"
+        onClick={handleClose}
+        className="block md:inline text-gray-700 hover:text-blue-600"
+      >
+        Dashboard
+      </Link>
+      <Link
+        href="/dashboard/new"
+        onClick={handleClose}
+        className="block md:inline text-gray-700 hover:text-blue-600"
+      >
+        New
+      </Link>
+      <Link
+        href="/dashboard/settings"
+        onClick={handleClose}
+        className="block md:inline text-gray-700 hover:text-blue-600"
+      >
+        Settings
+      </Link>
+      <Link
+        href="/dashboard/analytics"
+        onClick={handleClose}
+        className="block md:inline text-gray-700 hover:text-blue-600"
+      >
+        Analytics
+      </Link>
+      <Link
+        href="/dashboard/reports"
+        onClick={handleClose}
+        className="block md:inline text-gray-700 hover:text-blue-600"
+      >
+        Reports
+      </Link>
+    </>
+  ) : (
+    <>
+      <Link
+        href="/"
+        onClick={handleClose}
+        className="block md:inline text-gray-700 hover:text-blue-600"
+      >
+        Home
+      </Link>
+      <Link
+        href="/docs"
+        onClick={handleClose}
+        className="block md:inline text-gray-700 hover:text-blue-600"
+      >
+        Docs
+      </Link>
+      <Link
+        href="/templates"
+        onClick={handleClose}
+        className="block md:inline text-gray-700 hover:text-blue-600"
+      >
+        Templates
+      </Link>
+      <Link
+        href="/pricing"
+        onClick={handleClose}
+        className="block md:inline text-gray-700 hover:text-blue-600"
+      >
+        Pricing
+      </Link>
+      <Link
+        href="/contact"
+        onClick={handleClose}
+        className="block md:inline text-gray-700 hover:text-blue-600"
+      >
+        Contact
+      </Link>
+    </>
   );
 
-  const authButtons = (
-    <div className="flex items-center gap-2">
-      <Link href="/login" onClick={handleClose}>
-        <RippleButton rippleColor="#ADD8E6">Dashboard</RippleButton>
-      </Link>
-    </div>
+  const authButtons = session ? (
+    <RippleButton
+      rippleColor="#FFB6C1"
+      onClick={() => signOut()}
+      className="text-gray-700 hover:text-red-600"
+    >
+      <div className="flex items-center gap-2">
+        <LogOut size={20} />
+        <span>Logout</span>
+      </div>
+    </RippleButton>
+  ) : (
+    <Link href="/login" onClick={handleClose}>
+      <RippleButton rippleColor="#ADD8E6">Login</RippleButton>
+    </Link>
   );
 
   return (
@@ -80,16 +133,12 @@ const Navbar = () => {
             height={35}
             alt="Form Builder Logo PNG"
           />
-          {/* desktop menu */}
           <div className="hidden md:flex items-center space-x-8">
             {menuButtons}
           </div>
-
           <div className="hidden md:flex space-x-2 items-center">
             {authButtons}
           </div>
-
-          {/* menu button */}
           <button
             onClick={() => setIsOpen(true)}
             className="md:hidden text-gray-700 focus:outline-none"
@@ -99,7 +148,7 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* sidebar overlay */}
+      {/* overlay */}
       <div
         className={`fixed inset-0 z-40 bg-black/30 md:hidden transition-opacity duration-300 ease-in-out ${
           isOpen && !isClosing ? 'opacity-100' : 'opacity-0 pointer-events-none'
@@ -126,7 +175,6 @@ const Navbar = () => {
               <X />
             </button>
           </div>
-
           {menuButtons}
           <hr />
           <div className="flex flex-col space-y-2">{authButtons}</div>

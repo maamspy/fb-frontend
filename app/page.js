@@ -1,9 +1,11 @@
+// app/page.js
+
 import React from 'react';
 
 const HomePage = () => {
   return (
-    <div className="h-[70vh] w-full flex justify-center items-center">
-      <div className="text-4xl font-semibold text-center">
+    <div className="flex flex-1 items-center justify-center">
+      <div className="text-4xl py-50 font-semibold text-center">
         We&apos;re building something crazy!
       </div>
     </div>

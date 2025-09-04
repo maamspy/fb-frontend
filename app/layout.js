@@ -1,25 +1,33 @@
 // app/layout.js
 
-import Navbar from "./_components/shared/Navbar";
-import "./globals.css";
-import { Raleway as RalewayFont } from "next/font/google";
+import './globals.css';
+import { Raleway as RalewayFont } from 'next/font/google';
+import Providers from './providers';
+import Navbar from './_components/shared/Navbar';
+import { getServerSession } from 'next-auth';
+import { authOptions } from './api/auth/[...nextauth]/route';
+import Footer from './_components/shared/Footer';
+
+export const metadata = { title: 'Home | Form Builder' };
 
 const raleway = RalewayFont({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
 });
 
-export const metadata = {
-  title: "NEXAUS FORM BUILDER",
-  description: "DEVELOPED BY NEXAUS",
-};
+export default async function RootLayout({ children }) {
+  const session = await getServerSession(authOptions);
 
-export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={raleway.className}>
-        <Navbar />
-        <main className="max-w-6xl mx-auto px-4 py-4">{children}</main>
+      <body className={`${raleway.className} flex flex-col min-h-screen`}>
+        <Providers session={session}>
+          <Navbar />
+          <main className="flex-grow flex flex-col max-w-6xl mx-auto w-full px-4">
+            {children}
+          </main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );
