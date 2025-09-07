@@ -1,4 +1,4 @@
-// app/dashboard/page.jsx
+// app/(protected)/dashboard/page.jsx
 
 export default function Dashboard() {
   return (

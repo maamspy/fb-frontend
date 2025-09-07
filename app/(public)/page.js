@@ -1,4 +1,4 @@
-// app/page.js
+// app/(public)/page.js
 
 import React from 'react';
 

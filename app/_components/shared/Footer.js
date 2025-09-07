@@ -1,13 +1,14 @@
+// app/_components/shared/Footer.js
+
 'use client';
 
 import Link from 'next/link';
-import { FaHeart } from 'react-icons/fa';
 import Image from 'next/image';
 
 export default function Footer() {
   return (
     <footer className="bg-gray-50 border-t border-gray-200">
-      <div className="max-w-6xl mx-auto px-4 py-6 sm:py-10 grid grid-cols-1 md:grid-cols-6 gap-6">
+      <div className="max-w-6xl mx-auto px-4 py-6 md:py-10 grid grid-cols-1 md:grid-cols-6 gap-6">
         <div className="md:col-span-2">
           <div className="flex items-center gap-2 mb-4">
             <Image

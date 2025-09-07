@@ -12,7 +12,7 @@ export const authOptions = {
         try {
           // backend login API
           const response = await axios.post(
-            `${process.env.BACKEND_URL}/api/auth/login`,
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`,
             {
               email: credentials.email,
               password: credentials.password,

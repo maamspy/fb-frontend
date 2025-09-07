@@ -3,15 +3,13 @@
 'use client';
 
 import { RippleButton } from '@/components/magicui/ripple-button';
-import { Menu, X, LogOut } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { useSession, signOut } from 'next-auth/react';
 
 const Navbar = () => {
-  const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const pathname = usePathname();
@@ -28,45 +26,7 @@ const Navbar = () => {
     if (isOpen) handleClose();
   }, [pathname]);
 
-  const menuButtons = session ? (
-    <>
-      <Link
-        href="/dashboard"
-        onClick={handleClose}
-        className="block md:inline text-gray-700 hover:text-blue-600"
-      >
-        Dashboard
-      </Link>
-      <Link
-        href="/dashboard/new"
-        onClick={handleClose}
-        className="block md:inline text-gray-700 hover:text-blue-600"
-      >
-        New
-      </Link>
-      <Link
-        href="/dashboard/settings"
-        onClick={handleClose}
-        className="block md:inline text-gray-700 hover:text-blue-600"
-      >
-        Settings
-      </Link>
-      <Link
-        href="/dashboard/analytics"
-        onClick={handleClose}
-        className="block md:inline text-gray-700 hover:text-blue-600"
-      >
-        Analytics
-      </Link>
-      <Link
-        href="/dashboard/reports"
-        onClick={handleClose}
-        className="block md:inline text-gray-700 hover:text-blue-600"
-      >
-        Reports
-      </Link>
-    </>
-  ) : (
+  const menuButtons = (
     <>
       <Link
         href="/"
@@ -106,18 +66,7 @@ const Navbar = () => {
     </>
   );
 
-  const authButtons = session ? (
-    <RippleButton
-      rippleColor="#FFB6C1"
-      onClick={() => signOut()}
-      className="text-gray-700 hover:text-red-600"
-    >
-      <div className="flex items-center gap-2">
-        <LogOut size={20} />
-        <span>Logout</span>
-      </div>
-    </RippleButton>
-  ) : (
+  const authButtons = (
     <Link href="/login" onClick={handleClose}>
       <RippleButton rippleColor="#ADD8E6">Login</RippleButton>
     </Link>
@@ -158,7 +107,7 @@ const Navbar = () => {
 
       {/* sidebar */}
       <div
-        className={`fixed top-0 left-0 h-full w-64 bg-white md:hidden shadow-md z-50 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 left-0 h-full w-56 bg-white md:hidden shadow-md z-50 transform transition-transform duration-300 ease-in-out ${
           isOpen
             ? isClosing
               ? '-translate-x-full'

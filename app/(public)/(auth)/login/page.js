@@ -1,4 +1,4 @@
-// app/(auth)/login/page.js
+// app/(public)/(auth)/login/page.js
 
 'use client';
 
@@ -33,7 +33,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex flex-1 items-center justify-center py-10">
-      <div className="w-full max-w-md rounded-2xl bg-white px-4 py-8 sm:p-8 border border-gray-200">
+      <div className="w-full max-w-md rounded-2xl bg-white px-4 py-8 md:p-8 border border-gray-200">
         <div className="mb-6 flex justify-center items-center gap-2">
           <h1 className="text-2xl font-semibold text-center text-gray-800">
             Welcome Back
